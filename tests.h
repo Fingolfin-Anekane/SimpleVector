@@ -117,10 +117,21 @@ inline void Test1() {
 }
 
 inline void Test2() {
-    // PushBack
+    // PushBack rvalue
     {
         SimpleVector<int> v(1);
         v.PushBack(42);
+        assert(v.GetSize() == 2);
+        assert(v.GetCapacity() >= v.GetSize());
+        assert(v[0] == 0);
+        assert(v[1] == 42);
+    }
+
+    // PushBack lvalue
+    {
+        SimpleVector<int> v(1);
+        int value = 42;
+        v.PushBack(value);
         assert(v.GetSize() == 2);
         assert(v.GetCapacity() >= v.GetSize());
         assert(v[0] == 0);
@@ -208,10 +219,17 @@ inline void Test2() {
         assert(dst_vector == src_vector);
     }
 
-    // Вставка элементов
+    // Вставка элементов rvalue
     {
         SimpleVector<int> v{1, 2, 3, 4};
         v.Insert(v.begin() + 2, 42);
+        assert((v == SimpleVector<int>{1, 2, 42, 3, 4}));
+    }
+    // Вставка элеметов lvalue
+    {
+        SimpleVector<int> v{1, 2, 3, 4};
+        int value = 42;
+        v.Insert(v.begin() + 2, value);
         assert((v == SimpleVector<int>{1, 2, 42, 3, 4}));
     }
 
