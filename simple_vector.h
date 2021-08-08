@@ -230,6 +230,7 @@ public:
     // вместимость вектора должна увеличиться вдвое, а для вектора вместимостью 0 стать равной 1
     Iterator Insert(ConstIterator pos, const Type& value) {
         auto dist = std::distance(cbegin(), pos);
+        if ((dist < 0) || (dist > size_)) throw std::out_of_range("Insert(pos, lvalue) -> pos out of range");
         if (capacity_ == 0) {
             ArrayPtr<Type> new_arrayPtr(1);
             new_arrayPtr.Get()[0] = value;
@@ -256,6 +257,7 @@ public:
 
     Iterator Insert(ConstIterator pos, Type&& value) {
         auto dist = std::distance(cbegin(), pos);
+        if ((dist < 0) || (dist > size_)) throw std::out_of_range("Insert(pos, rvalue) -> pos out of range");
         if (capacity_ == 0) {
             ArrayPtr<Type> new_arrayPtr(1);
             new_arrayPtr.Get()[0] = std::move(value);
