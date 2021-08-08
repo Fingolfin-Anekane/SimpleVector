@@ -291,7 +291,7 @@ public:
     // Удаляет элемент вектора в указанной позиции
     Iterator Erase(ConstIterator pos) {
         size_t dist = std::distance(cbegin(), pos);
-        if ((dist < 0) || (dist > size_)) throw std::out_of_range("Erase(pos) -> pos out of range");
+        if ((dist < 0) || (dist >= size_)) throw std::out_of_range("Erase(pos) -> pos out of range");
         std::move(&arrayPtr_[dist + 1], &arrayPtr_[size_], &arrayPtr_[dist]);
         --size_;
         return begin() + dist;
